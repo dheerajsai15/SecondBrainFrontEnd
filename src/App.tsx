@@ -1,34 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react"
+import { Button } from "./components/ui/Button"
+import { Card } from "./components/ui/Card"
+import { CreateContentModal } from "./components/ui/CreateContentModal"
+import { PlusIcon } from "./icons/PlusIcon"
+import { ShareIcon } from "./icons/ShareIcon"
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [modalOpen, useModalOpen] = useState(true);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="p-4">
+      <CreateContentModal open={modalOpen} onClose={() => {
+        useModalOpen(false)
+      }}/>
+      <div className="flex justify-end gap-3">
+        <Button onClick={() => useModalOpen(true)} startIcon={<PlusIcon size="md"/>} variant="primary" size="md" text="Add Content"></Button>
+        <Button startIcon={<ShareIcon size="md"/>} variant="secondary" size="md" text="Share Brain"></Button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <div className="flex gap-4">
+        <Card type="twitter" link="https://x.com/rnshrutii/status/1955844799166341492" title="First Tweet"/>
+        <Card type="youtube" link="https://www.youtube.com/watch?v=0dZwOXhoTCA" title="First Youtube"/>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 

@@ -1,30 +1,17 @@
-import { useState } from "react"
-import { Button } from "./components/ui/Button"
-import { Card } from "./components/ui/Card"
-import { CreateContentModal } from "./components/ui/CreateContentModal"
-import { PlusIcon } from "./icons/PlusIcon"
-import { ShareIcon } from "./icons/ShareIcon"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Dashboard } from "./pages/dashboard"
+import { Signin } from "./pages/Signin"
+import { Signup } from "./pages/Signup"
 
 
 function App() {
-  const [modalOpen, useModalOpen] = useState(true);
-
-  return (
-    <div className="p-4">
-      <CreateContentModal open={modalOpen} onClose={() => {
-        useModalOpen(false)
-      }}/>
-      <div className="flex justify-end gap-3">
-        <Button onClick={() => useModalOpen(true)} startIcon={<PlusIcon size="md"/>} variant="primary" size="md" text="Add Content"></Button>
-        <Button startIcon={<ShareIcon size="md"/>} variant="secondary" size="md" text="Share Brain"></Button>
-      </div>
-
-      <div className="flex gap-4">
-        <Card type="twitter" link="https://x.com/rnshrutii/status/1955844799166341492" title="First Tweet"/>
-        <Card type="youtube" link="https://www.youtube.com/watch?v=0dZwOXhoTCA" title="First Youtube"/>
-      </div>
-    </div>
-  )
+  return <BrowserRouter>
+    <Routes>
+      <Route path="/signup" element={<Signup/>} />
+      <Route path="/signin" element={<Signin/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
+    </Routes>
+  </BrowserRouter>
 }
 
 export default App

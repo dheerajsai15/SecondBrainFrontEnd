@@ -1,31 +1,61 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { CrossIcon } from "../../icons/CrossIcon"
 import { Button } from "./Button"
+import { Input } from "./Input"
+import axios from "axios"
+import { BACKEND_URL } from "../../config"
 
-export const CreateContentModal = ({open,onClose}) => {
-    
-    return <div>
-        {open && <div className="w-screen h-screen bg-slate-500 fixed top-0 left-0 opacity-60 flex justify-center items-center">
-                <div className="bg-white p-4 rounded">
-                    <div className="flex justify-end">
-                        <div onClick={onClose} className="cursor-pointer">
-                            <CrossIcon />
-                        </div>
-                    </div>
-                    <div>
-                        <Input placeholder={"Title"}/>
-                        <Input placeholder={"Link"}/>
-                    </div>
-                    <div className="flex justify-center">
-                        <Button variant="primary" text="Submit" size="md"></Button>
-                    </div>
-                </div>
-        </div>}
-    </div>
+enum ContentType {
+    Youtube = "youtube",
+    Twitter = "twitter"
 }
 
-function Input({onChange,placeholder}: {onChange: () => void, placeholder: string}){
+export const CreateContentModal = ({open,onClose}) => {
+    const titleRef = useRef<HTMLInputElement>(null);
+    const linkRef = useRef<HTMLInputElement>(null);
+    const [type, setType] = useState(ContentType.Youtube);
+    
+    async function addContent(){
+        const title = titleRef.current?.value;
+        const link = linkRef.current?.value;
+        await axios.post(`${BACKEND_URL}/api/v1/content`,{
+            link,
+            title,
+            type
+        }, {
+            headers:{
+                "Authorization": localStorage.getItem("token")
+            }
+        });
+        alert("Content Successfully added!")
+        onClose();
+    }
+    
     return <div>
-        <input type={"text"} className="px-4 py-2 border rounded m-2" onChange={onChange} placeholder={placeholder}/>
+        {open && <div>
+            <div className="w-screen h-screen bg-slate-500 fixed top-0 left-0 opacity-60"></div>
+            <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
+                <div className="bg-white p-4 rounded">
+                        <div className="flex justify-end">
+                            <div onClick={onClose} className="cursor-pointer">
+                                <CrossIcon />
+                            </div>
+                        </div>
+                        <div>
+                            <Input placeholder={"Title"} ref={titleRef}/>
+                            <Input placeholder={"Link"} ref={linkRef}/>
+                        </div>
+                        <div className="flex justify-center pb-2 gap-2 pt-1">
+                            <Button text="Youtube" size="md" variant={type === ContentType.Youtube ? "primary" : "secondary"}
+                            onClick={() => setType(ContentType.Youtube)}/>
+                            <Button text="Twitter" size="md" variant={type === ContentType.Twitter ? "primary" : "secondary"}
+                            onClick={() => setType(ContentType.Twitter)}/>
+                        </div>    
+                        <div className="flex justify-center">
+                            <Button variant="primary" onClick={addContent} text="Submit" size="md"></Button>
+                        </div>
+                </div>
+            </div>    
+        </div>}
     </div>
 }

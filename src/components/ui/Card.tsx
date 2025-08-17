@@ -23,9 +23,6 @@ export const Card = ({title, link, type}: CardProps) => {
                         <ShareIcon size="md"/>
                     </a>
                 </div>
-                <div className="text-gray-400">
-                    <ShareIcon size="md"/>
-                </div>
             </div>
         </div>
 

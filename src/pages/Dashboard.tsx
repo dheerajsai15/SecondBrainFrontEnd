@@ -35,7 +35,6 @@ export function Dashboard() {
             const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
             await navigator.clipboard.writeText(shareUrl);
             alert("Link Copied to clipboard")
-
           }} startIcon={<ShareIcon size="md"/>} variant="secondary" size="md" text="Share Brain"></Button>
         </div>
 

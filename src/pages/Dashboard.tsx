@@ -24,7 +24,7 @@ export function Dashboard() {
         <CreateContentModal open={modalOpen} onClose={() => {
           useModalOpen(false)
         }}/>
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-3 pb-4">
           <Button onClick={() => useModalOpen(true)} startIcon={<PlusIcon size="md"/>} variant="primary" size="md" text="Add Content"></Button>
           <Button onClick={async() => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`, { share: true }, {

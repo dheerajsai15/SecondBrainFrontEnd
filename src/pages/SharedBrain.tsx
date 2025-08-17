@@ -6,7 +6,7 @@ import { Button } from "../components/ui/Button";
 import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { Card } from "../components/ui/Card";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const SharedBrain = () => {
     const [contents, setContents] = useState([]);
